@@ -3,8 +3,8 @@ package wallet
 import (
 	"bytes"
 	"encoding/gob"
-	"github.com/piotrnar/gocoin/client/common"
-	"github.com/piotrnar/gocoin/lib/utxo"
+	"github.com/gocoin/client/common"
+	"github.com/gocoin/lib/utxo"
 	"io/ioutil"
 )
 

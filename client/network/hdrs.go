@@ -3,9 +3,9 @@ package network
 import (
 	"bytes"
 	"encoding/binary"
-	"github.com/piotrnar/gocoin/client/common"
-	"github.com/piotrnar/gocoin/lib/btc"
-	"github.com/piotrnar/gocoin/lib/chain"
+	"github.com/gocoin/client/common"
+	"github.com/gocoin/lib/btc"
+	"github.com/gocoin/lib/chain"
 	"time"
 )
 

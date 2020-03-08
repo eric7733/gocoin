@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/piotrnar/gocoin"
-	"github.com/piotrnar/gocoin/lib/others/sys"
-	"github.com/piotrnar/gocoin/lib/utxo"
+	"github.com/gocoin"
+	"github.com/gocoin/lib/others/sys"
+	"github.com/gocoin/lib/utxo"
 	"io/ioutil"
 	"os"
 	"runtime/debug"
@@ -32,14 +32,14 @@ var (
 	}
 
 	CFG struct { // Options that can come from either command line or common file
-		Testnet        bool
-		ConnectOnly    string
-		Datadir        string
-		TextUI_Enabled bool
-		UserAgent      string
+		Testnet          bool
+		ConnectOnly      string
+		Datadir          string
+		TextUI_Enabled   bool
+		UserAgent        string
 		LastTrustedBlock string
 
-		WebUI          struct {
+		WebUI struct {
 			Interface   string
 			AllowedIP   string // comma separated
 			ShowBlocks  uint32
@@ -80,23 +80,23 @@ var (
 			Enabled    bool // Global on/off swicth
 			FeePerByte float64
 			MaxTxSize  uint32
-			MemInputs bool
+			MemInputs  bool
 		}
 		Memory struct {
-			GCPercTrshold int
-			UseGoHeap     bool // Use Go Heap and Garbage Collector for UTXO records
-			MaxCachedBlks uint
-			FreeAtStart   bool // Free all possible memory after initial loading of block chain
-			CacheOnDisk   bool
-			MaxDataFileMB uint // 0 for unlimited size
-			DataFilesKeep uint32 // 0 for all
-			OldDataBackup bool // move old dat files to "oldat/" folder (instead of removing them)
+			GCPercTrshold        int
+			UseGoHeap            bool // Use Go Heap and Garbage Collector for UTXO records
+			MaxCachedBlks        uint
+			FreeAtStart          bool // Free all possible memory after initial loading of block chain
+			CacheOnDisk          bool
+			MaxDataFileMB        uint   // 0 for unlimited size
+			DataFilesKeep        uint32 // 0 for all
+			OldDataBackup        bool   // move old dat files to "oldat/" folder (instead of removing them)
 			PurgeUnspendableUTXO bool
 		}
 		AllBalances struct {
-			MinValue   uint64 // Do not keep balance records for values lower than this
-			UseMapCnt  int
-			AutoLoad   bool
+			MinValue  uint64 // Do not keep balance records for values lower than this
+			UseMapCnt int
+			AutoLoad  bool
 		}
 		Stat struct {
 			HashrateHrs uint
@@ -110,7 +110,7 @@ var (
 			PingPeriodSec   uint // zero to not ping
 		}
 		UTXOSave struct {
-			SecondsToTake uint  // zero for as fast as possible, 600 for do it in 10 minutes
+			SecondsToTake uint   // zero for as fast as possible, 600 for do it in 10 minutes
 			BlocksToHold  uint32 // zero for immediatelly, one for every other block...
 		}
 	}
@@ -296,11 +296,11 @@ func Reset() {
 	BlockExpireEvery = time.Duration(CFG.DropPeers.BlckExpireHours) * time.Hour
 	PingPeerEvery = time.Duration(CFG.DropPeers.PingPeriodSec) * time.Second
 
-	atomic.StoreUint64(&maxMempoolSizeBytes, uint64(CFG.TXPool.MaxSizeMB) * 1e6)
-	atomic.StoreUint64(&maxRejectedSizeBytes, uint64(CFG.TXPool.MaxRejectMB) * 1e6)
-	atomic.StoreUint64(&minFeePerKB, uint64(CFG.TXPool.FeePerByte * 1000))
+	atomic.StoreUint64(&maxMempoolSizeBytes, uint64(CFG.TXPool.MaxSizeMB)*1e6)
+	atomic.StoreUint64(&maxRejectedSizeBytes, uint64(CFG.TXPool.MaxRejectMB)*1e6)
+	atomic.StoreUint64(&minFeePerKB, uint64(CFG.TXPool.FeePerByte*1000))
 	atomic.StoreUint64(&minminFeePerKB, MinFeePerKB())
-	atomic.StoreUint64(&routeMinFeePerKB, uint64(CFG.TXRoute.FeePerByte * 1000))
+	atomic.StoreUint64(&routeMinFeePerKB, uint64(CFG.TXRoute.FeePerByte*1000))
 
 	ips := strings.Split(CFG.WebUI.AllowedIP, ",")
 	WebUIAllowed = nil

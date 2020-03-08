@@ -3,8 +3,8 @@ package usif
 import (
 	"bufio"
 	"encoding/gob"
-	"github.com/piotrnar/gocoin/client/common"
-	"github.com/piotrnar/gocoin/lib/btc"
+	"github.com/gocoin/client/common"
+	"github.com/gocoin/lib/btc"
 	"os"
 	"sync"
 )
@@ -31,7 +31,7 @@ func ProcessBlockFees(height uint32, bl *btc.Block) {
 
 	for i := 1; i < len(bl.Txs); i++ {
 		txs[bl.Txs[i].Hash.Hash] = i
-		fees[i-1][0] = uint64(3 * bl.Txs[i].NoWitSize + bl.Txs[i].Size)
+		fees[i-1][0] = uint64(3*bl.Txs[i].NoWitSize + bl.Txs[i].Size)
 		fees[i-1][1] = uint64(bl.Txs[i].Fee)
 		fees[i-1][2] = uint64(i)
 	}

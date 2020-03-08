@@ -1,10 +1,10 @@
 package webui
 
 import (
-	"sort"
 	"encoding/json"
-	"github.com/piotrnar/gocoin/client/common"
+	"github.com/gocoin/client/common"
 	"net/http"
+	"sort"
 )
 
 type many_counters []one_counter
@@ -53,8 +53,8 @@ func json_counts(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var all_var_cnt struct {
-		Gen []*one_var_cnt  `json:"gen"`
-		Txs []*one_var_cnt  `json:"txs"`
+		Gen []*one_var_cnt `json:"gen"`
+		Txs []*one_var_cnt `json:"txs"`
 		Net []*one_net_rec `json:"net"`
 	}
 

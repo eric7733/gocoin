@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/hex"
-	"github.com/piotrnar/gocoin/lib/others/cgo/sipasec"
+	"github.com/gocoin/lib/others/cgo/sipasec"
 	"runtime"
 	"sync"
 	"time"

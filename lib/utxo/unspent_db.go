@@ -5,8 +5,8 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	"github.com/piotrnar/gocoin/lib/btc"
-	"github.com/piotrnar/gocoin/lib/others/sys"
+	"github.com/gocoin/lib/btc"
+	"github.com/gocoin/lib/others/sys"
 	"io/ioutil"
 	"os"
 	"sync"
@@ -21,7 +21,7 @@ const (
 var (
 	UTXO_WRITING_TIME_TARGET        = 5 * time.Minute // Take it easy with flushing UTXO.db onto disk
 	UTXO_SKIP_SAVE_BLOCKS    uint32 = 0
-	UTXO_PURGE_UNSPENDABLE   bool = false
+	UTXO_PURGE_UNSPENDABLE   bool   = false
 )
 
 var Memory_Malloc = func(le int) []byte {
@@ -219,7 +219,7 @@ func (db *UnspentDB) save() {
 
 	total_records = int64(len(db.HashMap))
 
-	buf := bytes.NewBuffer(make([]byte, 0, save_buffer_min + 0x1000)) // add 4K extra for the last record (it will still be able to grow over it)
+	buf := bytes.NewBuffer(make([]byte, 0, save_buffer_min+0x1000)) // add 4K extra for the last record (it will still be able to grow over it)
 	binary.Write(buf, binary.LittleEndian, uint64(db.LastBlockHeight))
 	buf.Write(db.LastBlockHash)
 	binary.Write(buf, binary.LittleEndian, uint64(total_records))
@@ -278,8 +278,8 @@ func (db *UnspentDB) save() {
 	for k, v := range db.HashMap {
 		if check_time {
 			check_time = false
-			data_progress = int64(current_record << 20) / int64(total_records)
-			time_progress = int64(time.Now().Sub(start_time) << 20) / int64(UTXO_WRITING_TIME_TARGET)
+			data_progress = int64(current_record<<20) / int64(total_records)
+			time_progress = int64(time.Now().Sub(start_time)<<20) / int64(UTXO_WRITING_TIME_TARGET)
 			if data_progress > time_progress {
 				select {
 				case <-db.abortwritingnow:
@@ -311,7 +311,7 @@ func (db *UnspentDB) save() {
 			if !hurryup {
 				check_time = true
 			}
-			buf = bytes.NewBuffer(make([]byte, 0, save_buffer_min + 0x1000)) // add 4K extra for the last record
+			buf = bytes.NewBuffer(make([]byte, 0, save_buffer_min+0x1000)) // add 4K extra for the last record
 		}
 
 		current_record++

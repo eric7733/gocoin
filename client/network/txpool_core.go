@@ -3,10 +3,10 @@ package network
 import (
 	"encoding/binary"
 	"fmt"
-	"github.com/piotrnar/gocoin/client/common"
-	"github.com/piotrnar/gocoin/lib/btc"
-	"github.com/piotrnar/gocoin/lib/chain"
-	"github.com/piotrnar/gocoin/lib/script"
+	"github.com/gocoin/client/common"
+	"github.com/gocoin/lib/btc"
+	"github.com/gocoin/lib/chain"
+	"github.com/gocoin/lib/script"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -424,7 +424,7 @@ func HandleNetTx(ntx *TxRcvd, retry bool) (accepted bool) {
 
 	// Check for a proper fee
 	fee := totinp - totout
-	if !ntx.local && fee < (uint64(tx.VSize())*common.MinFeePerKB()/1000)  { // do not check minimum fee for locally loaded txs
+	if !ntx.local && fee < (uint64(tx.VSize())*common.MinFeePerKB()/1000) { // do not check minimum fee for locally loaded txs
 		RejectTx(ntx.Tx, TX_REJECTED_LOW_FEE)
 		TxMutex.Unlock()
 		common.CountSafe("TxRejectedLowFee")
@@ -498,7 +498,7 @@ func HandleNetTx(ntx *TxRcvd, retry bool) (accepted bool) {
 		}
 	}
 
-	rec := &OneTxToSend{Spent: spent, Volume: totinp, Local : ntx.local,
+	rec := &OneTxToSend{Spent: spent, Volume: totinp, Local: ntx.local,
 		Fee: fee, Firstseen: time.Now(), Tx: tx, MemInputs: frommem, MemInputCnt: frommemcnt,
 		SigopsCost: uint64(sigops), Final: final, VerifyTime: time.Now().Sub(start_time)}
 

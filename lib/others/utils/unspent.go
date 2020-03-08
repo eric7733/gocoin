@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/piotrnar/gocoin/lib/btc"
-	"github.com/piotrnar/gocoin/lib/utxo"
+	"github.com/gocoin/lib/btc"
+	"github.com/gocoin/lib/utxo"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -118,7 +118,7 @@ func GetUnspentFromBlockcypher(addr *btc.BtcAddr, currency string) (res utxo.All
 		if r.StatusCode == 429 && try_cnt < 5 {
 			try_cnt++
 			println("Retry blockcypher.com in", try_cnt, "seconds...")
-			time.Sleep( time.Duration(try_cnt) * time.Second)
+			time.Sleep(time.Duration(try_cnt) * time.Second)
 			continue
 		}
 

@@ -2,12 +2,12 @@ package webui
 
 import (
 	"encoding/json"
-	"github.com/piotrnar/gocoin/client/common"
-	"github.com/piotrnar/gocoin/client/network"
-	"github.com/piotrnar/gocoin/client/usif"
-	"github.com/piotrnar/gocoin/lib/btc"
+	"github.com/gocoin/client/common"
+	"github.com/gocoin/client/network"
+	"github.com/gocoin/client/usif"
+	"github.com/gocoin/lib/btc"
 	"net/http"
-//	"regexp"
+	//	"regexp"
 	"strconv"
 	"time"
 )

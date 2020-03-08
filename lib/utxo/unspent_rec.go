@@ -2,7 +2,7 @@ package utxo
 
 import (
 	//"encoding/binary"
-	"github.com/piotrnar/gocoin/lib/btc"
+	"github.com/gocoin/lib/btc"
 )
 
 /*
@@ -247,7 +247,6 @@ func (rec *UtxoRec) Serialize(full bool, use_buf []byte) (buf []byte) {
 	}
 	return
 }
-
 
 func (r *UtxoRec) ToUnspent(idx uint32, ad *btc.BtcAddr) (nr *OneUnspentTx) {
 	nr = new(OneUnspentTx)

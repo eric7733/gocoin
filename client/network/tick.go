@@ -5,9 +5,9 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
-	"github.com/piotrnar/gocoin/client/common"
-	"github.com/piotrnar/gocoin/lib/btc"
-	"github.com/piotrnar/gocoin/lib/others/peersdb"
+	"github.com/gocoin/client/common"
+	"github.com/gocoin/lib/btc"
+	"github.com/gocoin/lib/others/peersdb"
 	"math/rand"
 	"net"
 	"os"
@@ -83,7 +83,7 @@ func (c *OneConnection) ExpireHeadersAndGetData(now *time.Time, curr_ping_cnt ui
 
 	if disconnect != "" {
 		if c.X.IsSpecial {
-			common.CountSafe("Spec"+disconnect)
+			common.CountSafe("Spec" + disconnect)
 			c.counters[disconnect]++
 		} else {
 			c.Disconnect(disconnect)
@@ -556,7 +556,7 @@ func (c *OneConnection) Run() {
 			fmt.Println()
 			fmt.Println("********************** THIS SHOULD NOT HAPPEN **********************")
 			fmt.Println("Please report by sending email to piotr@gocoin.pl")
-			fmt.Println("or by logging new issue at https://github.com/piotrnar/gocoin/issues")
+			fmt.Println("or by logging new issue at https://github.com/gocoin/issues")
 			fmt.Println()
 			fmt.Println("Make sure to include the data below:")
 			fmt.Println()
@@ -609,7 +609,7 @@ func (c *OneConnection) Run() {
 
 		if cmd == nil {
 			if c.unfinished_getdata != nil && !c.SendingPaused() {
-				cmd = &BCmsg{cmd:"getdata", pl:c.unfinished_getdata}
+				cmd = &BCmsg{cmd: "getdata", pl: c.unfinished_getdata}
 				common.CountSafe("GetDataRestored")
 				goto recovered_getdata
 			}
@@ -833,7 +833,7 @@ func (c *OneConnection) Run() {
 			HammeringMutex.Lock()
 			rd = RecentlyDisconencted[c.PeerAddr.NetAddr.Ip4]
 			if rd == nil {
-				rd = &RecentlyDisconenctedType{Time:time.Now(), Count:1}
+				rd = &RecentlyDisconenctedType{Time: time.Now(), Count: 1}
 			}
 			rd.Why = c.why_disconnected
 			RecentlyDisconencted[c.PeerAddr.NetAddr.Ip4] = rd

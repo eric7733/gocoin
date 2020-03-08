@@ -2,19 +2,19 @@ package main
 
 import (
 	"fmt"
-	"github.com/piotrnar/gocoin"
-	"github.com/piotrnar/gocoin/client/common"
-	"github.com/piotrnar/gocoin/client/network"
-	"github.com/piotrnar/gocoin/client/rpcapi"
-	"github.com/piotrnar/gocoin/client/usif"
-	"github.com/piotrnar/gocoin/client/usif/textui"
-	"github.com/piotrnar/gocoin/client/usif/webui"
-	"github.com/piotrnar/gocoin/client/wallet"
-	"github.com/piotrnar/gocoin/lib/btc"
-	"github.com/piotrnar/gocoin/lib/chain"
-	"github.com/piotrnar/gocoin/lib/others/peersdb"
-	"github.com/piotrnar/gocoin/lib/others/qdb"
-	"github.com/piotrnar/gocoin/lib/others/sys"
+	"github.com/gocoin"
+	"github.com/gocoin/client/common"
+	"github.com/gocoin/client/network"
+	"github.com/gocoin/client/rpcapi"
+	"github.com/gocoin/client/usif"
+	"github.com/gocoin/client/usif/textui"
+	"github.com/gocoin/client/usif/webui"
+	"github.com/gocoin/client/wallet"
+	"github.com/gocoin/lib/btc"
+	"github.com/gocoin/lib/chain"
+	"github.com/gocoin/lib/others/peersdb"
+	"github.com/gocoin/lib/others/qdb"
+	"github.com/gocoin/lib/others/sys"
 	"io/ioutil"
 	"os"
 	"os/signal"
@@ -31,7 +31,7 @@ var (
 )
 
 const (
-	SaveBlockChainAfter = 2 * time.Second
+	SaveBlockChainAfter       = 2 * time.Second
 	SaveBlockChainAfterNoSync = 10 * time.Minute
 )
 
@@ -282,7 +282,7 @@ func do_the_blocks(end *chain.BlockTreeNode) {
 			break
 		}
 
-		if nxt.BlockSize==0 {
+		if nxt.BlockSize == 0 {
 			println("BlockSize is zero - corrupt database")
 			break
 		}
@@ -310,17 +310,17 @@ func do_the_blocks(end *chain.BlockTreeNode) {
 
 		tdl := time.Now()
 
-		rb := &network.OneReceivedBlock{TmStart:sta, TmPreproc:pre, TmDownload:tdl}
+		rb := &network.OneReceivedBlock{TmStart: sta, TmPreproc: pre, TmDownload: tdl}
 		network.MutexRcv.Lock()
 		network.ReceivedBlocks[bl.Hash.BIdx()] = rb
 		network.MutexRcv.Unlock()
 
-		network.NetBlocks <- &network.BlockRcvd{Conn:nil, Block:bl, BlockTreeNode:nxt,
-			OneReceivedBlock:rb, BlockExtraInfo:nil}
+		network.NetBlocks <- &network.BlockRcvd{Conn: nil, Block: bl, BlockTreeNode: nxt,
+			OneReceivedBlock: rb, BlockExtraInfo: nil}
 
 		NetBlocksSize.Add(len(bl.Raw))
 		for NetBlocksSize.Get() > 64*1024*1024 {
-			time.Sleep(100*time.Millisecond)
+			time.Sleep(100 * time.Millisecond)
 		}
 
 		last = nxt
@@ -424,7 +424,7 @@ func main() {
 		if common.Last.ParseTill != nil {
 			network.LastCommitedHeader = common.Last.ParseTill
 			println("Hold on network for now as we have",
-				common.Last.ParseTill.Height - common.Last.Block.Height, "new blocks on disk.")
+				common.Last.ParseTill.Height-common.Last.Block.Height, "new blocks on disk.")
 			go do_the_blocks(common.Last.ParseTill)
 		} else {
 			network.LastCommitedHeader = common.Last.Block

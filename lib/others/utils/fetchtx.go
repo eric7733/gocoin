@@ -4,7 +4,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"github.com/piotrnar/gocoin/lib/btc"
+	"github.com/gocoin/lib/btc"
 	"io/ioutil"
 	"net/http"
 	"time"
